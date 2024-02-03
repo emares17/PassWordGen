@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@600;800&family=JetBrains+Mono:ital,wght@0,500;1,500&family=Poppins:wght@500;700&family=Roboto:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
+  <title>Password Generator App</title>
+</head>
+<body>
+  <div class="main-container">
+    <h1 class="main-header">Password Generator</h1>
+    <div class="password">
+      <span class="password-result" id="password-result">P4$5W0rD!</span>
+      <img class="copy-button" id="copy" src="/starter-code/assets/images/icon-copy.svg" alt="copy">
+    </div>
+    <div class="container">
+      <div class="password-generator">
+        <span class="length">Character Length</span>
+        <span class="amount" id="amount">10</span>
+      </div>
+      <div class="range-slider">
+        <input class="slider" id="slider" type="range" min="1" max="20" value="10">
+      </div>
+      <div class="checkboxes">
+        <div class="requirements">
+          <input class="checkbox" id="uppercase" type="checkbox" name="checkbox1">
+          <label class="include" for="checkbox1">Include Uppercase Letters</label>
+        </div>
+        <div class="requirements">
+          <input class="checkbox" id="lowercase" type="checkbox" name="checkbox2">
+          <label class="include" for="checkbox2">Include Lowercase Letters</label>
+        </div>
+        <div class="requirements">
+          <input class="checkbox" id="numbers" type="checkbox" name="checkbox3">
+          <label class="include" for="checkbox3">Include Numbers</label>
+        </div>
+        <div class="requirements">
+          <input class="checkbox" id="symbols" type="checkbox" name="checkbox4">
+          <label class="include" for="checkbox4">Include Symbols</label>
+        </div>
+      </div>
+      <div class="password-strength">
+        <span class="strength">STRENGTH</span>
+        <div class="difficulty">
+          <span class="current-difficulty">MEDIUM</span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+      <div class="generate" id="generate">
+        <span class="button-label">GENERATE</span>
+        <img class="arrow" src="/starter-code/assets/images/icon-arrow-right.svg" alt="">
+      </div>
+    </div>
+  </div>
+  <script src="/starter-code/main.js"></script>
+</body>
+</html>
