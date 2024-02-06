@@ -48,7 +48,7 @@
       <div class="password-strength">
         <span class="strength">STRENGTH</span>
         <div class="difficulty">
-          <span class="current-difficulty">MEDIUM</span>
+          <span class="current-difficulty" id="current-difficulty">MEDIUM</span>
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
@@ -56,11 +56,12 @@
         </div>
       </div>
       <div class="generate" id="generate">
-        <span class="button-label">GENERATE</span>
-        <img class="arrow" src="/starter-code/assets/images/icon-arrow-right.svg" alt="">
+        <span class="button-label" id="button-label">GENERATE</span>
+        <img class="arrow" id="arrow" src="/starter-code/assets/images/icon-arrow-right.svg" alt="">
       </div>
     </div>
   </div>
   <script src="/starter-code/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 </body>
 </html>

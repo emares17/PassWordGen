@@ -6,6 +6,11 @@ const numbers = document.getElementById('numbers');
 const symbols = document.getElementById('symbols');
 const generate = document.getElementById('generate');
 const passwordResult = document.getElementById('password-result');
+const bars = document.querySelectorAll('.bar');
+const currentDifficulty = document.getElementById('current-difficulty');
+const checkboxes = document.querySelectorAll('.checkbox');
+const buttonLabel = document.getElementById('button-label');
+const arrow = document.getElementById('arrow');
 
 // Slider event listener & styles
 const sliderValue = slider.value;
@@ -34,16 +39,34 @@ const passwordIncludes = {
 //Event Listener to generate password with user selected options 
 generate.addEventListener('click', () => {
   const sliderValue = slider.value;
-  const result = generatePassword(sliderValue);
+  includes = selectedOptions()
+  const result = generatePassword(sliderValue, includes);
+  const strength = zxcvbn(result)
 
-  passwordResult.innerHTML = result;
+  const checkedCheckboxes = Array.from(checkboxes).every(checkbox => !checkbox.checked);
+
+  if (checkedCheckboxes) {
+    setTimeout(() => {
+      arrow.style.display = 'none';
+      buttonLabel.textContent = 'Please select options'
+
+      setTimeout(() => {
+        arrow.style.display = '';
+        buttonLabel.textContent = 'GENERATE'
+      }, 3000)
+    }, 1000);
+  } else {
+    currentDifficulty.textContent = getStrengthText(strength.score) 
+    passwordResult.textContent = result;
+
+    updateBarsColor(strength.score);
+  }
 });
 
 // Function to gather letters, numbers, and symbols that were checked by the user. 
 const selectedOptions = () => {
   const selectedOptions = [];
 
-  const checkboxes = document.querySelectorAll('.checkbox');
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
       const option = checkbox.id;
@@ -54,9 +77,8 @@ const selectedOptions = () => {
   return selectedOptions;
 };
 
-const generatePassword = (sliderValue) => {
-  // Array of user selected characters
-  const passwordIncludes = selectedOptions();
+
+const generatePassword = (sliderValue, passwordIncludes) => {
 
   // shuffle array of password characters using Fisher-Yates algorithm
   for (let i = passwordIncludes.length - 1; i > 0; i--) {
@@ -102,3 +124,59 @@ document.getElementById('copy').addEventListener('click', () => {
   const password = passwordResult.textContent;
   navigator.clipboard.writeText(password);
 });
+
+// Helper function to get strength text according to its score
+const getStrengthText = (score) => {
+  if (score === 1) return "WEAK";
+  if (score === 2) return "MEDIUM";
+  if (score === 3) return "STRONG";
+  if (score === 4) return "VERY STRONG";
+};
+
+
+// Helper function to update the color of bars based on the score
+const updateBarsColor = (score) => {
+  const colors = ['#F00C0C', '#FFD700', '#98FB98', '#00FF7F'];
+
+  bars.forEach((bar, index) => {
+    bar.style.backgroundColor = index < score ? colors[score - 1] : '';
+  });
+};
+
+// RANDOM GENERATORS FOR WINDOW LOAD PASSWORD
+// Random number generator between range 5-20
+const getRandomIntRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Chooses random checkboxes to add to an options array
+const getRandomCheckboxes = () => {
+  const selectedOptions = [];
+
+  checkboxes.forEach(checkbox => {
+    const randomNumber = Math.floor(Math.random() * 100);
+
+    if (randomNumber % 2 == 0) {
+      const option = checkbox.id;
+      selectedOptions.push(...passwordIncludes[option])
+    };
+  });
+
+  return selectedOptions;
+}
+
+// generates the random password displayed on window load
+const generateRandomPassword = () => {
+    const value = getRandomIntRange(5, 20);
+    const includes = getRandomCheckboxes()
+    result = generatePassword(value, includes)
+    const strength = zxcvbn(result)
+
+    passwordResult.textContent = result;
+    currentDifficulty.textContent = getStrengthText(strength.score) 
+
+    updateBarsColor(strength.score);
+}
+
+// Window load event listener
+window.addEventListener('load', generateRandomPassword);
