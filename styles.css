@@ -335,7 +335,7 @@ input[type="checkbox"]:checked + label::before{
     }
 
     .current-difficulty {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .bar {
